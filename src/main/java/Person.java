@@ -68,8 +68,10 @@ public class Person implements CheckPerson {
     }
 
     @Override
-    public boolean test(Person p) {
-        return true;
+    public boolean test(Person p){
+        boolean isFemale;
+        isFemale = p.gender.equals(Sex.FEMALE);
+    return isFemale;
     }
 
 

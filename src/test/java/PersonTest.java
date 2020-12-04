@@ -5,22 +5,21 @@ import org.junit.Test;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
 public class PersonTest {
     private Person pompy;
     private Person kyle;
-    List<Person> people;
+    List<Person> roster;
 
     @Before
     public void setUp(){
-        people = new ArrayList<>();
+        roster = new ArrayList<>();
         pompy = new Person("Pompy", LocalDate.of(1994, 3, 28), Person.Sex.FEMALE, "pompy@pompy.com");
         kyle = new Person("Kyle", LocalDate.of(1992, 2, 17), Person.Sex.FEMALE, "kyle@kyle.com");
-        people.add(pompy);
-        people.add(kyle);
+        roster.add(pompy);
+        roster.add(kyle);
     }
 
 
@@ -82,21 +81,65 @@ public class PersonTest {
     @Test
     public void printPersonsOlderThanTest(){
 
-        Person.printPersonsOlderThan(people, 25);
+        Person.printPersonsOlderThan(roster, 25);
     }
 
     @Test
     public void printPersonWithinAgeRange(){
 
-        Person.printPersonsWithinAgeRange(people, 25,50);
+        Person.printPersonsWithinAgeRange(roster, 25,50);
     }
 
     @Test
     public void checkPersonEligibleToVoteTest(){
-      Person.printPersons(people, pompy.checkPerson);
+      Person.printPersonsWithPredicate(roster,
+              p -> p.getAge() >= 18
+      );
 
     }
 
+    @Test
+    public void processPersonsTest(){
+        Person.processPersons(roster, p -> p.getAge() >= 18,
+                    p-> p.printPerson()
+        );
+    }
+
+    @Test
+    public void processPersonsWithFunctionTest(){
+
+        //retrieves the email address from each member contained in roster who is eligible to vote and then prints it
+        Person.processPersonsWithFunction(roster,
+                p -> p.getAge() >= 18,
+                p-> p.getEmailAddress(),
+                email -> System.out.println(email)
+        );
+    }
+
+    @Test
+    public void processElementsTest(){
+
+
+        //This method invocation performs the following actions:
+        //
+        //Obtains a source of objects from the collection source. In this example, it obtains a source of Person objects from the collection roster. Notice that the collection roster, which is a collection of type List, is also an object of type Iterable.
+        //Filters objects that match the Predicate object tester. In this example, the Predicate object is a lambda expression that specifies which members would be eligible to vote.
+        //Maps each filtered object to a value as specified by the Function object mapper. In this example, the Function object is a lambda expression that returns the e-mail address of a member.
+        //Performs an action on each mapped object as specified by the Consumer object block. In this example, the Consumer object is a lambda expression that prints a string, which is the e-mail address returned by the Function object.
+
+
+        Person.processElements(roster,
+        p -> p.getAge() >= 18,
+        p -> p.getEmailAddress(),
+        email -> System.out.println(email)
+        );
+
+    }
+
+    @Test
+    public void aggregateProcessTest(){
+        Person.aggregateProcessElements(roster);
+    }
 
 
 }

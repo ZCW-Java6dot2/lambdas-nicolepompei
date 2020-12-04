@@ -3,8 +3,8 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Person implements CheckPerson {
-    List<Person> person = new ArrayList<>();
+public class Person {
+    List<Person> roster;
 
 
 
@@ -67,12 +67,12 @@ public class Person implements CheckPerson {
         return emailAddress;
     }
 
-    @Override
-    public boolean test(Person p){
-        boolean isFemale;
-        isFemale = p.gender.equals(Sex.FEMALE);
-    return isFemale;
-    }
+
+//    public boolean test(Person p) {
+//        boolean isFemale;
+//        isFemale = p.gender.equals(Sex.FEMALE);
+//        return isFemale;
+//    }
 
 
     public static void printPersonsOlderThan(List<Person> roster, int age) {
@@ -93,17 +93,25 @@ public class Person implements CheckPerson {
         }
     }
 
-    public static void printPersons(
-            List<Person> roster, CheckPerson tester) {
+    //one of the arguments is an anonymous class that filters members that are 18+
+
+
+    CheckPerson checkPerson = new CheckPerson() {
+        public boolean test(Person p) {
+            return p.getAge() >= 18;
+        }
+    };
+
+    public static void printPersons(List<Person> roster, CheckPerson checkPerson) {
         for (Person p : roster) {
-            if (tester.test(p)) {
+            if (checkPerson.test(p)) {
                 p.printPerson();
             }
         }
     }
 
+
+
+
+
 }
-
-
-
-

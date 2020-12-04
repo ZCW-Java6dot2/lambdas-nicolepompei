@@ -93,7 +93,7 @@ public class PersonTest {
 
     @Test
     public void checkPersonEligibleToVoteTest(){
-        Person.printPersons(people, new CheckPersonEligibleToVote());
+      Person.printPersons(people, pompy.checkPerson);
 
     }
 

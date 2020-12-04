@@ -91,6 +91,11 @@ public class PersonTest {
         Person.printPersonsWithinAgeRange(people, 25,50);
     }
 
+    @Test
+    public void checkPersonEligibleToVoteTest(){
+        Person.printPersons(people, new CheckPersonEligibleToVote());
+
+    }
 
 
 
